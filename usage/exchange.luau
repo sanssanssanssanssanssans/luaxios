@@ -1,5 +1,5 @@
 local HttpService = game:GetService("HttpService")
-local Axios = require("./luaxios")
+local Axios = require("../luaxios")
 local axios = Axios.new({ baseURL = "https://openexchangerates.org/api" })
 
 local function fetchExchangeRates(callback)
