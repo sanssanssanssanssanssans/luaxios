@@ -77,3 +77,11 @@ retryDelay: The delay (in seconds) between retries.
 
 Retry Logic
 luaxios includes built-in retry functionality. You can configure the number of retries and the delay between retries using the retryCount and retryDelay options. For example, set up 3 retries with a 2-second delay:
+```luau
+local axios = Axios.new({
+    baseURL = "https://example.com",
+    retryCount = 3,
+    retryDelay = 2
+})
+```
+
