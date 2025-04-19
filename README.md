@@ -1,87 +1,92 @@
 # luaxios
 
-luaxios is a Lua library for making asynchronous HTTP requests and handling JSON responses. This library is based on `HttpService` and supports multiple HTTP methods for communication.
+luaxios is a lightweightm Axios-inspired HTTP client for Luau. It uses a Promise-based design.
 
-## Installation 
+## 📦 Components
 
-go to main.luau, then copy code and go to serverscriptservice, next make modulescript name "luaxios". then, paste code.
+- `luaxios.luau`: The main client with methods like `get`, `post`, `put`, `delete`, and support for retries, timeouts, and baseURL.
+- `Promise.luau`: A minimal Promise implementation for async-style flow.
+- `XMLParser.luau`: A simple XML-to-table parser for handling XML responses.
 
-# usage
+## 🚀 Features
 
-1. create an luaxios Instance
+- Axios-like API (`get`, `post`, `put`, `delete`)
+- Promise-based request handling
+- JSON and XML response parsing
+- Automatic retry on failure
+- Timeout management
+- Customizable headers
+- Built-in cookie parsing
 
-``` luau
+## 🔧 Installation
 
+Place the following modules in your Roblox project.
+Then require them in your script.
+
+## 🛠️ Usage
+
+### Initalize the client.
+
+```luau
+local Axios = require(path_to_LuAxios.Axios)
 local axios = Axios.new({
-    baseURL = "https://example.com",  -- base url
-    timeout = 5000,  -- Set timeout (5 seconds)
-    retryCount = 3,  -- Set maximum retry attempts
-    retryDelay = 1   -- Set delay between retries (1 second)
-})
-
-```
-
-2. sending http requsets.
-
-Get request :
-```luau
-axios:get("/path/to/resource", {}, function(response)
-    if response.status == 200 then
-        print("Successfully received data!")
-        print(response.data)
-    else
-        print("Error occurred: " .. response.status)
-    end
-end)
-```
-
-POST request
-
-```luau
-local data = { key = "value" }
-axios:post("/path/to/resource", data, {}, function(response)
-    if response.status == 200 then
-        print("POST request successful")
-        print(response.data)
-    else
-        print("Error occurred: " .. response.status)
-    end
-end)
-```
-
-other methods (PATCH,PUT,DELETE)
-
-```luau
-axios:patch("/path/to/resource", data, {}, function(response) end)
-axios:put("/path/to/resource", data, {}, function(response) end)
-axios:delete("/path/to/resource", {}, function(response) end)
-```
-
-3. Handlling Responses and Errors
-
-luaxios returns the response in a callback function. If the status code is in the 200s, it indicates a successful request, otherwise, an error occurred.
-
-Response Object:
-status: HTTP status code (e.g., 200, 404, 500, etc.)
-data: The JSON response data (either object or string)
-headers: The response headers (for debugging purposes, etc.)
-error: Error message if the request fails
-
-Options
-When creating an instance using Axios.new, you can set the following options:
-
-baseURL: The base URL for requests.
-timeout: The timeout for requests (in milliseconds).
-retryCount: The maximum number of retries for failed requests.
-retryDelay: The delay (in seconds) between retries.
-
-Retry Logic
-luaxios includes built-in retry functionality. You can configure the number of retries and the delay between retries using the retryCount and retryDelay options. For example, set up 3 retries with a 2-second delay:
-```luau
-local axios = Axios.new({
-    baseURL = "https://example.com",
-    retryCount = 3,
-    retryDelay = 2
+	baseURL = "https://api.example.com",
+	headers = {
+		["Content-Type"] = "application/json",
+	},
+	timeout = 5,        -- optional
+	retryCount = 3,     -- optional
+	retryDelay = 1,     -- optional
+	debug = false,      -- optional
 })
 ```
 
+### Make a GET request
+
+```luau
+axios:get("/users")
+	:Then(function(response)
+		print("Success!", response.data)
+	end)
+	:Catch(function(err)
+		warn("Failed:", err.error)
+	end):Finally(function(err)
+        warn("zzzz")
+    end)
+```
+
+### Make a POST request
+```luau
+axios:post("/users", { name = "Alice" })
+	:Then(function(response)
+		print("User created:", response.data)
+	end)
+	:Catch(function(err)
+		warn("Error:", err.error)
+	end):Finally(function(err)
+        warn("zzzz")
+    end)
+```
+
+### ⚙️ Additional Methods
+
+```text
+axios:setTimeout(seconds)
+axios:setHeaders({ key = value, ... })
+axios:addHeader(key, value)
+axios:clearHeaders()
+axios:setBaseURL(url)
+axios:setRetryConfig(retryCount, retryDelay)
+```
+
+### 🍪 Get Cookies
+
+```luau
+local cookies = axios:getCookies(response)
+```
+
+## License
+
+MIT License. Use freely, modify as needed. </br>
+Contributions and improvements welcome! </br>
+Let me know if you want a Korean version alongside it or want to publish this as a GitHub project with a proper example project included!
