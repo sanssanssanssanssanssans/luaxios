@@ -1,6 +1,6 @@
 # luaxios
 
-luaxios is a lightweightm Axios-inspired HTTP client for Luau. It uses a Promise-based design.
+luaxios is a lightweight Axios-inspired HTTP client for Luau. It uses a Promise-based design.
 
 ## 📦 Components
 
