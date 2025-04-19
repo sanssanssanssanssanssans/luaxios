@@ -1,4 +1,4 @@
-local Axios = require("../luaxios")
+local Axios = require("pathtoluaxios")
 local axios = Axios.new({
 	baseURL = "https://jsonplaceholder.typicode.com", 
 	timeout = 10, 
