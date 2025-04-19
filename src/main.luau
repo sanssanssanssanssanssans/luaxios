@@ -1,6 +1,6 @@
 local HttpService = game:GetService("HttpService")
-local Promise = require(script.Promise)
-local XMLParser = require(script.XMLParser)  
+local Promise = require("./Promise")
+local XMLParser = require("./XMLParser")  
 local Axios = {}
 Axios.__index = Axios
 
